@@ -16,7 +16,7 @@ if (~sum(ismember(G.Edges.Properties.VariableNames,'Name')))
 end
 
 
-
+T = Trail(G, 1);
 
 
 end

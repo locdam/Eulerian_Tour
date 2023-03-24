@@ -1,6 +1,6 @@
 
 
-function [T] = dfsSpanningTree(G,v_id)
+function [T] = Trail(G,v_id)
 
 % check if vertices have names
 if (~sum(ismember(G.Nodes.Properties.VariableNames,'Name')))
