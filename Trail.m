@@ -19,7 +19,7 @@ end
 
 % set the dfnumber of all vertices to -inf
 G.Nodes.dfN = -inf(numnodes(G),1);
-
+G.Edges.dfN = -inf(numedges(G),1);
 % Let T = the vertex with id v_id
 T = graph;
 T = addnode(T,1);

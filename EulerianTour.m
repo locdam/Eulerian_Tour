@@ -16,7 +16,11 @@ if (~sum(ismember(G.Edges.Properties.VariableNames,'Name')))
 end
 
 
-T = Trail(G, 1);
+trail = Trail(G, 1);
 
+while numedges(G) > numedges(T)
+    
+
+end
 
 end
