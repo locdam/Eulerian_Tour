@@ -15,12 +15,36 @@ if (~sum(ismember(G.Edges.Properties.VariableNames,'Name')))
     G.Edges.Name = split(Enames);
 end
 
+v_id = 1;
+G.Edges.dfN = -inf(numedges(G),1);
 
-trail = Trail(G, 1);
+currentDf = 0;
 
-while numedges(G) > numedges(T)
-    
+G.Edges.dfN(v_id) = currentDf;
+[S,nV] = outedges(G,v_id);
 
+S = S(nV~=v_id);
+
+T = [];
+
+
+new_id = v_id;
+while numedges(G) ~= length(T)
+      currentDf = currentDf+1;
+      eidx = nextEdge(G, S);
+      T(end+1) = [eidx];
+      
+      endpts = G.Edges.EndNodes(eidx,:);
+      endpts = findnode(G,{endpts{1} endpts{2}});
+      
+      if endpts(1) == new_id
+          pre_id = endpts(2);
+      elseif endpts(2) == new_id
+          pre_id = endpts(1);
+      end
+      G.Edges.dfN(eidx) = currentDf
+      [S, new_id] = FrontierEdge(G, S, pre_id, eidx)
+%       pre_id = new_id;
 end
 
 end

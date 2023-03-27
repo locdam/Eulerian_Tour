@@ -1,0 +1,10 @@
+function [eidx] = nextEdge(G, S)
+    %First, sort S from small to big
+sort_S = sort(S);
+
+%run a loop across the lenght of S
+    for i=1:length(sort_S)
+        
+        % find the endpoints of S at each ith position
+       
+end
