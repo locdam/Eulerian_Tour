@@ -21,13 +21,15 @@ function [S, new_id] = FrontierEdge(G, S, pre_id, eidx)
             if ismember(-Inf, G.Edges.dfN(e))     
                 S_new = e;
                 for k = 1:length(S_new)
-        if isinf(G.Edges.dfN(S_new(k)))
-            S(end+1) = [S_new(k)];
+                    if isinf(G.Edges.dfN(S_new(k)))
+                        S(end+1) = [S_new(k)];
+                    end
+                end
+    
+                break
+            end
         end
     end
-    
-            break
-            end
     endpts = G.Edges.EndNodes(eidx,:);
     endpts = findnode(G,{endpts{1} endpts{2}});
     
