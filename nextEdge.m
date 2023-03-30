@@ -5,7 +5,7 @@ sort_S = sort(S);
     for i=1:length(sort_S)
         
        if isinf(G.Edges.dfN(sort_S(i)))
-           eidx = sort_S(i)
+           eidx = sort_S(i);
            endpts = G.Edges.EndNodes(eidx,:);
             endpts = findnode(G,{endpts{1} endpts{2}});
     
