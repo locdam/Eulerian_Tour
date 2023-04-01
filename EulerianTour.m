@@ -1,6 +1,5 @@
 function [T] = EulerianTour(G)
-
-
+ 
 % check if vertices have names
 if (~sum(ismember(G.Nodes.Properties.VariableNames,'Name')))
     % if not, give names using its indices
@@ -30,7 +29,7 @@ currentDf = 0;
 [S,nV] = outedges(G,v_id);
 
 S = S(nV~=v_id);
-
+%T =[];
 pre_id = v_id;
 while ~isempty(S)
       currentDf = currentDf+1;
@@ -55,30 +54,24 @@ b = T.Edges.dfN;
     
     H=a(bsort);
     H = H';
-%     while numedges(G) ~= numedges(T)
-        currentDf = max(G.Edges.dfN);
         
         for i = 1: numnodes(G)
-            S = [];
-            currentDf = currentDf +1;
             e = outedges(G, i);
-            if ismember(-Inf, G.Edges.dfN(e))     
-                S_new = e;
-                for k = 1:length(S_new)
-                    if isinf(G.Edges.dfN(S_new(k)))
-                        S(end+1) = [S_new(k)];
-                    end
+            if ismember(-Inf, G.Edges.dfN(e))  
+                %find closed cycle starting from nodes i
+                [A, G] = Trail(G, i);
+                es = outedges(T, i);
+                es_origId = T.Edges.origId(es);
+                pos1 = find(H == es_origId(1));
+                pos2 = find(H == es_origId(2));
+                if pos1 < pos2 
+                    H = [H(1:pos1), A, H(pos2:end)];
+                elseif pos1 > pos2
+                    H = [H(1:pos2), A, H(pos1:end)];
                 end
-                pre_id = i;
-                [eidx] = NextEdge2(G, S, pre_id);
-                
-                es = outedges(G, i);
-                pos = find(H == es(2));
-                b = H(pos);
-                H = [H(1:pos), eidx, H(pos+1:end)];
-                G.Edges.dfN(eidx) = currentDf;
             end
         end
-%     end
-    T = H;
-end
+%      end
+    T = H';
+
+end % end function EulerianTour
